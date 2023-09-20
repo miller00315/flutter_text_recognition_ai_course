@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
@@ -20,15 +21,16 @@ class _MyHomePageState extends State<MyHomePage> {
   String result = '';
   late ImagePicker imagePicker;
 
+  late TextRecognizer textRecognizer;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     imagePicker = ImagePicker();
+    textRecognizer = GoogleMlKit.vision.textRecognizer();
 
     //TODO initialize detector
-
   }
 
   _imgFromCamera() async {
@@ -45,17 +47,45 @@ class _MyHomePageState extends State<MyHomePage> {
   _imgFromGallery() async {
     XFile? pickedFile =
         await imagePicker.pickImage(source: ImageSource.gallery);
-    File image = File(pickedFile!.path);
-    setState(() {
-      _image = image;
-      if (_image != null) {
-        doTextRecognition();
-      }
-    });
+
+    if (pickedFile != null) {
+      File image = File(pickedFile.path);
+      setState(() {
+        _image = image;
+        if (_image != null) {
+          doTextRecognition();
+        }
+      });
+    }
   }
 
-  //TODO perform text recognition
   doTextRecognition() async {
+    if (_image != null) {
+      final inputImage = InputImage.fromFile(_image!);
+
+      RecognizedText recognizedText =
+          await textRecognizer.processImage(inputImage);
+
+      String text = recognizedText.text;
+
+      setState(() {
+        result = text;
+      });
+
+      for (TextBlock textBlock in recognizedText.blocks) {
+        final Rect rect = textBlock.boundingBox;
+
+        final List<Point<int>> cornerPoints = textBlock.cornerPoints;
+
+        final String text = textBlock.text;
+
+        final List<String> languages = textBlock.recognizedLanguages;
+
+        for (TextLine line in textBlock.lines) {
+          for (TextElement element in line.elements) {}
+        }
+      }
+    }
   }
 
   @override
