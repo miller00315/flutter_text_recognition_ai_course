@@ -1,13 +1,10 @@
 import 'dart:io';
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
-  runApp(MyHomePage());
+  runApp(const MyHomePage());
 }
 
 class MyHomePage extends StatefulWidget {
@@ -66,25 +63,30 @@ class _MyHomePageState extends State<MyHomePage> {
       RecognizedText recognizedText =
           await textRecognizer.processImage(inputImage);
 
-      String text = recognizedText.text;
-
-      setState(() {
-        result = text;
-      });
+      result = '';
 
       for (TextBlock textBlock in recognizedText.blocks) {
-        final Rect rect = textBlock.boundingBox;
+        /* final Rect rect = textBlock.boundingBox;
 
         final List<Point<int>> cornerPoints = textBlock.cornerPoints;
 
         final String text = textBlock.text;
 
-        final List<String> languages = textBlock.recognizedLanguages;
+        final List<String> languages = textBlock.recognizedLanguages; */
 
         for (TextLine line in textBlock.lines) {
-          for (TextElement element in line.elements) {}
+          for (TextElement element in line.elements) {
+            result += '${element.text} ';
+          }
+
+          result += '\n';
         }
+        result += '\n\n';
       }
+
+      setState(() {
+        result;
+      });
     }
   }
 
