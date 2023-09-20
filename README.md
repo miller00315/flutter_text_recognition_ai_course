@@ -1,16 +1,9 @@
 # flutter_text_recognition_complete
 
-A new Flutter project.
+## Realizando o reconhecimento de imagens com flutter e google ml kit
 
-## Getting Started
+## Bibliotecas
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Markup: * google_ml_kit
+        * image_picker
