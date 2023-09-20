@@ -5,5 +5,5 @@
 ## Bibliotecas
 
 
-Markup: * google_ml_kit
-        * image_picker
+* google_ml_kit
+* image_picker
